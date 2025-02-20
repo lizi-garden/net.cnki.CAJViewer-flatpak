@@ -1,0 +1,33 @@
+app-id: net.cnki.CAJViewer
+runtime: org.freedesktop.Platform
+runtime-version: '24.08'
+sdk: org.freedesktop.Sdk
+command: start.sh
+finish-args:
+  - --share=ipc
+  - --socket=x11
+  - --socket=wayland
+  - --filesystem=home
+modules:
+  - name: CAJViewer
+    buildsystem: simple
+    build-commands:
+      - mkdir -p /app/opt
+      - unzip -d /app/opt cajviewer.zip
+      - install -Dm755 start.sh /app/bin/start.sh
+      - chmod +x /app/bin/start.sh
+      - mkdir -p /app/share/applications
+      - cp cajviewer.desktop /app/share/applications/
+      - mkdir -p /app/share/icons/hicolor/48x48/apps/
+      - cp cajviewer.png /app/share/icons/hicolor/48x48/apps/
+      - sed -i 's|^Exec=.*$|Exec=/app/bin/start.sh|' /app/share/applications/cajviewer.desktop
+      - sed -i 's|^Icon=.*$|Icon=cajviewer|' /app/share/applications/cajviewer.desktop
+    sources:
+      - type: file
+        path: cajviewer.zip
+      - type: file
+        path: start.sh
+      - type: file
+        path: cajviewer.desktop
+      - type: file
+        path: cajviewer.png

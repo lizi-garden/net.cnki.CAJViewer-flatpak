@@ -7,6 +7,7 @@ CAJViewer flatpak
 
 #  自行编译
 ```
+wget -c https://github.com/lizi-garden/net.cnki.CAJViewer-flatpak/releases/download/9.0/cajviewer.zip
 flatpak-builder --user --install --force-clean build-dir net.cnki.CAJViewer
 ```
 
